@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar color='primary'>
+    <ion-row>
+      <ion-col>
+        <ion-title>EDIT USER</ion-title>
+      </ion-col>
+      <ion-col>
+        <ion-icon name="close-outline" style="float: right;margin-right: 10px;font-size: 25px;" (click)="back()"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form  [formGroup]="userForm"  (ngSubmit)="Add(form)">
+    <ion-item>
+      <ion-label position="floating">name</ion-label>
+      <ion-input formControlName="name" ></ion-input>
+    
+    </ion-item>
+    <span class="error ion-padding" style="color: #eb445a;" *ngIf="isSubmitted && errorControl.name.errors?.required">
+      Name is required.
+    </span>
+    <ion-item>
+      <ion-label position="floating">User Id</ion-label>
+      <ion-input formControlName="userId"  ></ion-input>
+    </ion-item>
+    <span class="error ion-padding" style="color: #eb445a;" *ngIf="isSubmitted && errorControl.userId.errors?.required">
+      User Id is required.
+    </span>
+    <!-- <ion-item *ngFor="let entry of process; index as i" [attr.data-index]="i">
+      <ion-label>{{entry.name}}</ion-label>
+      <ion-checkbox name="{{entry.name}}" slot="end" [(ngModel)]="filters[i]"></ion-checkbox>
+    </ion-item> -->
+    <ion-item>
+      <ion-label>Process</ion-label>
+      <ion-select formControlName="process"  [interfaceOptions]="customAlertOptions" interface="action-sheet" multiple="true" placeholder="Select One"  [value]="selectedProcess" >
+        <!-- <ion-select-option *ngFor="let entry of selectedProcess; " value="{{entry}}" >{{entry}}</ion-select-option> -->
+        <ion-select-option *ngFor="let entry of process; " value="{{entry}}" >{{entry}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <span class="error ion-padding" style="color: #eb445a;" *ngIf="isSubmitted && errorControl.process.errors?.required">
+     Select Process
+    </span>
+    <ion-item>
+      <ion-label position="floating">Password</ion-label>
+      <ion-input formControlName="password" type="Password"  ></ion-input>
+    </ion-item>
+    <span class="error ion-padding" style="color: #eb445a;" *ngIf="isSubmitted && errorControl.password.errors?.required">
+      Password is required.
+     </span>
+    <ion-button expand="full" type="submit">Submit</ion-button>
+  </form>
+</ion-content>

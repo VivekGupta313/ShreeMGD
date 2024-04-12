@@ -1,0 +1,8 @@
+{
+  "name": "ShreeMGD",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

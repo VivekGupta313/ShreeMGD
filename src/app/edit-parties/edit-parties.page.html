@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-row>
+      <ion-col>
+        <ion-title>EDIT PARTY</ion-title>
+      </ion-col>
+      <ion-col>
+        <ion-icon name="close-outline" style="float: right;margin-right: 10px;font-size: 25px;" (click)="back()"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form  [formGroup]="userForm" (ngSubmit)="Add(form)">
+    <ion-item>
+      <ion-label position="floating">name</ion-label>
+      <ion-input formControlName="name"  ></ion-input>
+     
+    </ion-item>
+    <span class="error ion-padding" style="color: #eb445a;" *ngIf="isSubmitted && errName">
+      Invalid Name
+    </span>
+    <ion-item>
+      <ion-label position="floating">Mobile No.</ion-label>
+      <ion-input formControlName="mobile"  ></ion-input>
+      
+    </ion-item>
+    <span class="error ion-padding" style="color: #eb445a;" *ngIf="isSubmitted && errMobile">
+      Invalid Mobile No.
+     </span>
+    <ion-item>
+      <ion-label position="floating">Address</ion-label>
+      <!-- <ion-input name="userId" ngModel ></ion-input> -->
+      <ion-textarea formControlName="address" ></ion-textarea>
+      
+    </ion-item>
+    <span class="error ion-padding" style="color: #eb445a;" *ngIf="isSubmitted && errAddress">
+      Invalid Address
+    </span>
+    <ion-item>
+      <ion-label position="floating">GST No</ion-label>
+      <ion-input formControlName="gstNo"  ></ion-input>
+    </ion-item>
+    <span class="error ion-padding" style="color: #eb445a;" *ngIf="isSubmitted && errGst">
+      Invalid GST NO
+    </span>
+
+      <ion-button expand="full" type="submit"(click)="Add()">Submit</ion-button>
+  </form>
+</ion-content>

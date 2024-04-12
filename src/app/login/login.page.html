@@ -1,0 +1,17 @@
+
+<ion-content class="container" >
+  <div style="margin-top: 20% ;" >
+  <h2 style="text-align: center; color: #3880ff;" >ShreeMGD</h2>
+  <form  #form="ngForm" (ngSubmit)="CheckLogin(form)">
+  <ion-item>
+    <ion-label position="floating">User Id</ion-label>
+    <ion-input name="userId" ngModel ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Password</ion-label>
+    <ion-input name="pass" type="Password" ngModel ></ion-input>
+  </ion-item>
+  <ion-button expand="full" type="submit"(click)="CheckLogin()">Login</ion-button>
+</form>
+</div>
+</ion-content>

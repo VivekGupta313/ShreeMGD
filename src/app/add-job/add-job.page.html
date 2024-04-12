@@ -1,0 +1,332 @@
+<ion-header>
+  <ion-toolbar color='primary'>
+    <ion-row>
+      <ion-col>
+        <ion-title>New Job</ion-title>
+      </ion-col>
+      <ion-col>
+        <ion-icon name="close-outline" style="float: right;margin-right: 10px;font-size: 25px;" (click)="back()"></ion-icon>
+      </ion-col>
+    </ion-row>
+  
+    
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content *ngIf="process">
+ <form  [formGroup]="userForm"  (ngSubmit)="Add(form)">
+  <ion-item>
+    <ion-label position="floating">Party Name</ion-label>
+    <ion-input formControlName="name" value="{{itemName}}" [(ngModel)]='itemName' (keyup)="searchItem()"></ion-input>
+  </ion-item>
+  <ion-card style="margin-inline: 0px; margin: 0px;z-index: 2; display: none;" id="searchCardItem" >
+   
+    <ion-card-content style="margin-inline: 0px; margin: 0px;z-index: 2;" id="searchCardItem">
+      <div *ngIf="isItemSearch">
+      <div *ngFor="let c of searchResultItem">
+        <ion-list >
+  
+          <ion-item (click)="SelectItem(c)">
+            <ion-label>{{c.name}} </ion-label>
+          </ion-item>
+        
+      </ion-list>
+      </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+    
+  <!-- <ion-item>
+      <ion-label position="floating">Party Name.</ion-label>
+      <ion-input formControlName="name" ></ion-input>
+    
+    </ion-item> -->
+    <!-- <span class="error ion-padding" style="color: #eb445a;" *ngIf="isSubmitted && errorControl.name.errors?.required">
+      Name is required.
+    </span> -->
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating">Job No.</ion-label>
+          <ion-input formControlName="jobNo"  ></ion-input>
+        </ion-item>
+        <span class="error ion-padding" style="color: #eb445a;" *ngIf="isSubmitted && errorControl.jobNo.errors?.required">
+          Job No is required.
+        </span>
+        <span class="error ion-padding" style="color: #eb445a;" *ngIf="isSubmitted && !isUnique">
+          Job No Must Be Unique.
+        </span>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating"></ion-label>
+          <ion-input formControlName="date" type="date"  ></ion-input>
+        </ion-item>
+        <span class="error ion-padding" style="color: #eb445a;" *ngIf="isSubmitted && errorControl.date.errors?.required">
+          Date is required.
+         </span>
+       
+      </ion-col>
+    </ion-row>
+   
+    <!-- <ion-item *ngFor="let entry of process; index as i" [attr.data-index]="i">
+      <ion-label>{{entry.name}}</ion-label>
+      <ion-checkbox name="{{entry.name}}" slot="end" [(ngModel)]="filters[i]"></ion-checkbox>
+    </ion-item> -->
+    
+     
+      <ion-row>
+        <ion-col size="8">
+          <ion-item>
+            <ion-label position="floating">Job Name</ion-label>
+            <ion-input formControlName="jobName" type="text"  ></ion-input>
+          </ion-item>
+          <span class="error ion-padding" style="color: #eb445a;" *ngIf="isSubmitted && errorControl.jobName.errors?.required">
+            Job Name is required.
+           </span>
+        </ion-col>
+        <ion-col size="4">
+
+          <ion-item>
+            <ion-label position="floating">Job Id</ion-label>
+            <ion-input formControlName="jobid" type="text"  ></ion-input>
+          </ion-item>
+          <span class="error ion-padding" style="color: #eb445a;" *ngIf="isSubmitted && errorControl.jobid.errors?.required">
+            Job Name is required.
+           </span>
+        </ion-col>
+      </ion-row>
+      
+
+
+    <ion-segment 
+    value="all" 
+    color="tertiary" 
+    scrollable="true"
+    
+    (ionChange)="segmentChanged($event)">
+
+      <ion-segment-button value="top">
+        <ion-label>Top</ion-label>
+      </ion-segment-button>
+
+      <ion-segment-button value="bottom">
+        <ion-label>Bottom</ion-label>
+      </ion-segment-button>
+
+      <ion-segment-button value="tray">
+        <ion-label>Tray</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+
+    <div *ngIf="segmentModel === 'top'">
+      <ion-item>
+        <ion-label>Top Process</ion-label>
+        <ion-select formControlName="processTop"  [interfaceOptions]="customAlertOptions" interface="action-sheet" multiple="true" placeholder="Select One" (ionChange)="SelectProcess($event)">
+        
+          <ion-select-option *ngFor="let entry of process; " value="{{entry.name}}" >{{entry.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div *ngIf="isTopSelected">
+        <div *ngFor="let select  of selectedTop">
+         <ion-row>
+           <ion-col>
+           
+              <p>{{select}}</p>
+           
+           </ion-col>
+           <ion-col>
+            <ion-item>
+              <ion-label position="floating">Index</ion-label>
+              <ion-input formControlName="top{{select}}index" type="text"  ></ion-input>
+            </ion-item>             
+           </ion-col>
+         </ion-row>
+         <ion-item>
+          <ion-label position="floating">Description</ion-label>
+          <ion-textarea formControlName={{select}}top></ion-textarea>
+        </ion-item>
+        </div>
+      </div>
+      <ion-item>
+        <ion-label position="floating">Qty Top</ion-label>
+        <ion-input formControlName="qtyTop"  ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Paper Size</ion-label>
+        <ion-input formControlName="paperSizeTop" type="text"  ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Specal Instruction</ion-label>
+        <ion-input formControlName="specialInstructionTop" type="text"  ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Die Size</ion-label>
+        <ion-input formControlName="dieSizeTop" type="text"  ></ion-input>
+      </ion-item>
+     
+       
+      
+       <ion-item>
+        <ion-label position="floating">Tempo No</ion-label>
+        <ion-input formControlName="tempoNoTop" type="text"  ></ion-input>
+      </ion-item>
+       <ion-item>
+        <ion-label position="floating">Delivery Date</ion-label>
+        <ion-input formControlName="DeliveryDateTop" type="text"  ></ion-input>
+      </ion-item>
+     <ion-item>
+        <ion-label position="floating">Chalan No</ion-label>
+        <ion-input formControlName="DeliveryChNoTop" type="text"  ></ion-input>
+      </ion-item>
+     <ion-item>
+        <ion-label position="floating">Final Qty</ion-label>
+        <ion-input formControlName="FinalQtyTop" type="text"  ></ion-input>
+      </ion-item>
+    </div>
+    
+    <div *ngIf="segmentModel === 'bottom'">
+      <ion-item>
+        <ion-label>Bottom Process</ion-label>
+        <ion-select formControlName="processBottom"  [interfaceOptions]="customAlertOptions" interface="action-sheet" multiple="true" placeholder="Select One" (ionChange)="SelectProcessBottom($event)">
+        
+          <ion-select-option *ngFor="let entry of process; " value="{{entry.name}}" >{{entry.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div *ngIf="isBottomSelected">
+        <div *ngFor="let select  of selectedBottom">
+         <ion-row>
+           <ion-col>
+           
+              <p>{{select}}</p>
+           
+           </ion-col>
+           <ion-col>
+            <ion-item>
+              <ion-label position="floating">Index</ion-label>
+              <ion-input formControlName="bottom{{select}}index" type="text"  ></ion-input>
+            </ion-item>            
+           </ion-col>
+         </ion-row>
+         <ion-item>
+          <ion-label position="floating">Description</ion-label>
+          <ion-textarea formControlName={{select}}bottom></ion-textarea>
+        </ion-item>
+          
+        </div>
+
+      </div>
+      <ion-item>
+        <ion-label position="floating">Qty Bottom</ion-label>
+        <ion-input formControlName="qtyBottom"  ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Paper Size</ion-label>
+        <ion-input formControlName="paperSizeBottom" type="text"  ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Specal Instruction</ion-label>
+        <ion-input formControlName="specialInstructionBottom" type="text"  ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Die Size</ion-label>
+        <ion-input formControlName="dieSizeBottom" type="text"  ></ion-input>
+      </ion-item>
+       
+      
+       <ion-item>
+        <ion-label position="floating">Tempo No</ion-label>
+        <ion-input formControlName="tempoNoBottom" type="text"  ></ion-input>
+      </ion-item>
+       <ion-item>
+        <ion-label position="floating">Delivery Date</ion-label>
+        <ion-input formControlName="DeliveryDateBottom" type="text"  ></ion-input>
+      </ion-item>
+     <ion-item>
+        <ion-label position="floating">Chalan No</ion-label>
+        <ion-input formControlName="DeliveryChNoBottom" type="text"  ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Final Qty</ion-label>
+        <ion-input formControlName="FinalQtyBottom" type="text"  ></ion-input>
+      </ion-item>
+    </div>
+    
+    <div *ngIf="segmentModel === 'tray'">
+      <ion-item>
+        <ion-label>Tray Process</ion-label>
+        <ion-select formControlName="processTray"  [interfaceOptions]="customAlertOptions" interface="action-sheet" multiple="true" placeholder="Select One" (ionChange)="SelectProcessTray($event)">
+        
+          <ion-select-option *ngFor="let entry of process; " value="{{entry.name}}" >{{entry.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div *ngIf="isTraySelected">
+        <div *ngFor="let select  of selectedTray">
+         <ion-row>
+           <ion-col>
+           
+              <p>{{select}}</p>
+           
+           </ion-col>
+           <ion-col>
+            <ion-item>
+              <ion-label position="floating">Index</ion-label>
+              <ion-input formControlName="tray{{select}}index" type="text"  ></ion-input>
+            </ion-item>
+            <span class="error ion-padding" style="color: #eb445a;" *ngIf="isSubmitted && errorControl.password.errors?.required">
+              Password is required.
+             </span>             
+           </ion-col>
+         </ion-row>
+         <ion-item>
+          <ion-label position="floating">Description</ion-label>
+          <ion-textarea formControlName={{select}}tray></ion-textarea>
+        </ion-item>
+          
+        </div>
+      </div>
+      <ion-item>
+        <ion-label position="floating">Qty Tray</ion-label>
+        <ion-input formControlName="qtyTray"  ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Paper Size</ion-label>
+        <ion-input formControlName="paperSizeTray" type="text"  ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Specal Instruction</ion-label>
+        <ion-input formControlName="specialInstructionTray" type="text"  ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Die Size</ion-label>
+        <ion-input formControlName="dieSizeTray" type="text"  ></ion-input>
+      </ion-item>
+     
+      
+       
+       <ion-item>
+        <ion-label position="floating">Tempo No</ion-label>
+        <ion-input formControlName="tempoNoTray" type="text"  ></ion-input>
+      </ion-item>
+      
+       <ion-item>
+        <ion-label position="floating">Delivery Date</ion-label>
+        <ion-input formControlName="DeliveryDateTray" type="text"  ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Chalan No</ion-label>
+        <ion-input formControlName="DeliveryChNoTray" type="text"  ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Final Qty</ion-label>
+        <ion-input formControlName="FinalQtyTray" type="text"  ></ion-input>
+      </ion-item>
+    </div>
+    <ion-button color="light" (click)="pickFile()">Choose File</ion-button>
+    <ion-img [src]="selectedImage" *ngIf="isImage"></ion-img>
+    <ion-button expand="full" type="submit">Submit</ion-button>
+  </form>
+</ion-content>

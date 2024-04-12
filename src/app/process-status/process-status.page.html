@@ -1,0 +1,164 @@
+<ion-header  [translucent]="true">
+  
+  <ion-toolbar color='primary'>
+    <ion-buttons slot="start">
+      <ion-menu-button style="color: #ffff;"></ion-menu-button>
+    </ion-buttons>
+   
+    <ion-row>
+      <ion-col >
+        
+        <ion-item color='primary'>
+          <ion-select [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="Select One" value={{title}} (ionChange)="changeData($event)">
+            <ion-select-option *ngFor="let entry of access; " value="{{entry.name}}">{{entry.name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      </ion-row>
+   
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment 
+     value="all" 
+     color="tertiary" 
+     scrollable="true"
+     
+     (ionChange)="segmentChanged($event)">
+ 
+       <ion-segment-button value="top">
+         <ion-label>Top</ion-label>
+       </ion-segment-button>
+ 
+       <ion-segment-button value="bottom">
+         <ion-label>Bottom</ion-label>
+       </ion-segment-button>
+ 
+       <ion-segment-button value="tray">
+         <ion-label>Tray</ion-label>
+       </ion-segment-button>
+     </ion-segment>
+ <div  *ngIf="segmentModel === 'top'">
+  <ion-row *ngFor="let entry of selected">
+    <ion-col>
+    <ion-card>
+      <ion-card-header>
+       
+        <ion-row>
+          <ion-col>
+            <ion-card-title> {{entry.jobNo}}&nbsp;&nbsp;{{entry.jobName}}</ion-card-title>
+            <p><b>Party: {{entry.PartName}}</b></p>   
+
+          </ion-col>
+           <ion-col>
+             <ion-card-title style="float: right;"> QTY : {{entry.qty}}</ion-card-title>
+           </ion-col>
+          </ion-row>
+        
+      </ion-card-header>
+      <ion-card-content>
+        <ion-row>
+          <ion-col style="border-right:1px solid ;"> 
+            <h3><b>Task</b></h3>
+           <p> {{entry.parameter}}</p>
+           <h3><b>Paper Size</b></h3>
+           <p>{{entry.paperSize}}
+          </ion-col>
+          <ion-col>
+            <h3><b>Processes</b></h3>
+           <div *ngFor="let p of entry.process">
+            <p>{{p.processName}}({{p.status}})</p>
+           </div>
+          </ion-col>
+          
+        </ion-row>
+        <ion-button color="light"  style="float: left;" (click)="viewImage(entry.image)">View Image</ion-button>    
+      </ion-card-content>
+    </ion-card>
+    </ion-col>
+  </ion-row>
+ </div>
+ <div  *ngIf="segmentModel === 'bottom'">
+  <ion-row *ngFor="let entry of selectedBottom">
+    <ion-col>
+    <ion-card>
+      <ion-card-header>
+       
+        <ion-row>
+          <ion-col>
+            <ion-card-title> {{entry.jobNo}}&nbsp;&nbsp;{{entry.jobName}}</ion-card-title>
+            <p><b>Party: {{entry.PartName}}</b></p>
+          </ion-col>
+           <ion-col>
+             <ion-card-title style="float: right;"> QTY : {{entry.qty}}</ion-card-title>
+           </ion-col>
+          </ion-row>
+        
+      </ion-card-header>
+    
+      <ion-card-content>
+        <ion-row>
+          <ion-col style="border-right:1px solid ;"> 
+            <h3><b>Task</b></h3>
+           <p> {{entry.parameter}}</p>
+           <h3><b>Paper Size</b></h3>
+           <p>{{entry.paperSize}}
+          </ion-col>
+          <ion-col>
+            <h3><b>Processes</b></h3>
+           <div *ngFor="let p of entry.process">
+            <p>{{p.processName}}({{p.status}})</p>
+           </div>
+          </ion-col>
+          
+        </ion-row>
+        <ion-button color="light"  style="float: left;" (click)="viewImage(entry.image)">View Image</ion-button>
+      </ion-card-content>
+    </ion-card>
+    </ion-col>
+  </ion-row>
+ </div>
+ <div  *ngIf="segmentModel === 'tray'">
+  <ion-row *ngFor="let entry of selectedTray">
+    <ion-col>
+    <ion-card>
+      <ion-card-header>
+       
+        <ion-row>
+          <ion-col>
+            <ion-card-title> {{entry.jobNo}}&nbsp;&nbsp;{{entry.jobName}}</ion-card-title>
+            <p><b>Party: {{entry.PartName}}</b></p>  
+          </ion-col>
+           <ion-col>
+             <ion-card-title style="float: right;"> QTY : {{entry.qty}}</ion-card-title>
+           </ion-col>
+          </ion-row>
+          
+      </ion-card-header>
+    
+      <ion-card-content>
+        <ion-row>
+          <ion-col style="border-right:1px solid ;"> 
+            <h3><b>Task</b></h3>
+           <p> {{entry.parameter}}</p>
+           <h3><b>Paper Size</b></h3>
+           <p>{{entry.paperSize}}
+          </ion-col>
+          <ion-col>
+            <h3><b>Processes</b></h3>
+           <div *ngFor="let p of entry.process">
+            <p>{{p.processName}}({{p.status}})</p>
+            <p>{{p.PartName}}</p>
+           </div>
+          </ion-col>
+          
+        </ion-row>
+        <ion-button color="light"  style="float: left;" (click)="viewImage(entry.image)">View Image</ion-button>   
+      </ion-card-content>
+    </ion-card>
+    </ion-col>
+  </ion-row>
+ </div>
+ 
+</ion-content>
